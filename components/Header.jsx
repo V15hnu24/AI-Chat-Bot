@@ -4,7 +4,7 @@ import Image from "next/image";
 
 function Header() {
   return (
-    <header className="bg-gray-200 py-2">
+    <header className="bg-gray-400 py-2">
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo on the left */}
         <Image

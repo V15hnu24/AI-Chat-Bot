@@ -1,15 +1,29 @@
-import React from "react";
+import { useState } from 'react';
+import ChatHistory from '../components/ChatHistory';
+import ChatBot from '../components/ChatBot';
 
-function Body() {
+export default function Body() {
+  const [messages, setMessages] = useState([]);
+
+  const sendMessageToBot = (message) => {
+    // Add the message to the chat history
+    setMessages((prevMessages) => [...prevMessages, message]);
+
+    // You can perform any additional logic here, like sending the message to the server or ChatGPT
+
+    // For now, let's simulate a bot response after a short delay
+    setTimeout(() => {
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        `Bot: Thanks for your message - ${message}`,
+      ]);
+    }, 500);
+  };
+
   return (
-    <>
-      <div className="bg-orange-200">
-        <h1 className="font-serif text-2xl font-semibold py-4 flex items-center justify-center">
-           Response
-        </h1> 
-      </div>
-    </>
+    <div className="flex">
+      <ChatHistory messages={messages} />
+      <ChatBot onSendMessage={sendMessageToBot} />
+    </div>
   );
 }
-
-export default Body;
