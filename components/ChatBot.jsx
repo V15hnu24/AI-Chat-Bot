@@ -1,5 +1,5 @@
-// components/ChatBot.js
 import React, { useRef, useState } from "react";
+import { server } from "../config";
 
 const ChatBot = () => {
   const [inputMessage, setInputMessage] = useState("");
@@ -8,9 +8,25 @@ const ChatBot = () => {
   const textareaRef = useRef(null);
 
   const sendMessage = async () => {
-    if (inputMessage.trim() === "") {
-      return;
-    }
+    const simulateAPICall = async (userMessage) => {
+      // POST into turn api
+      try {
+        const result = await fetch(`${server}/api/turn`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ prompt: userMessage }),
+        });
+
+        const data = await result.json();
+        const response = data["data"].response;
+        return response;
+      } catch (error) {
+        window.alert("Error: " + error);
+        console.log(error);
+      }
+    };
 
     // Add user message to the conversation
     setConversation([...conversation, { role: "user", content: inputMessage }]);

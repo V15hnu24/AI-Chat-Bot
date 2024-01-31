@@ -17,11 +17,8 @@
 }
 
 body {
-<<<<<<< HEAD
-=======
   margin: 0;
   overflow-y: hidden;
->>>>>>> chatbot
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
       to bottom,
