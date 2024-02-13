@@ -1,11 +1,18 @@
-import Body from "./Body";
 import Header from "./Header";
+import ChatHistory from "./ChatHistory";
+import ChatBot from "./ChatBot";
 
 function MainHome() {
   return (
     <>
       <Header />
-      <Body />
+      {/* <Body /> */}
+      <div className="flex">
+        {/* <ChatHistory onStartNewChat={handleStartNewChat} /> */}
+        {/* <ChatBot keyProp={key}/> */}
+        <ChatHistory />
+        <ChatBot />
+      </div>
     </>
   );
 }

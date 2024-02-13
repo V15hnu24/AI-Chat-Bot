@@ -17,7 +17,13 @@ const handler = async (req, res) => {
             break;
         case "POST":
             try {
-                const thread = await Thread.create(req.body);
+                // Create new empty thread without any body
+                console.log("Creating new thread");
+                const thread = await Thread({
+                    numberOfTurns: 0,
+                    turnIds: [],
+                });
+                await thread.save();
                 res.status(201).json({ success: true, data: thread });
             } catch (error) {
                 res.status(400).json({ success: false });
