@@ -1,15 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { server } from "../config";
+import Link from "next/link";
 
-const ChatHistory = ({ onStartNewChat }) => {
-
+const ChatHistory = () => {
   const [history, setHistory] = useState([]); // [TODO] - implement threadid
 
   const updateThreadHeads = async (threads) => {
     const history = [];
     for (let i = 0; i < threads.length; i++) {
       const head = threads[i].head;
-      history.push(head);
+      const id = threads[i]._id;
+      history.push({ head: head, id: id });
     }
     setHistory(history);
   };
@@ -26,7 +27,7 @@ const ChatHistory = ({ onStartNewChat }) => {
       const data = await result.json();
       const threads = data["data"];
       console.log(data);
-      if(threads.length > 0) updateThreadHeads(threads);
+      if (threads.length > 0) updateThreadHeads(threads);
       return threads;
     } catch (error) {
       window.alert("Error: " + error);
@@ -35,33 +36,43 @@ const ChatHistory = ({ onStartNewChat }) => {
   };
 
   const handleNewChatClick = () => {
-    // Call the onStartNewChat function to clear fields in ChatBot
-    onStartNewChat();
+    setTimeout(() => {
+      1000;
+    });
+    if (window.location.pathname === "/") {
+      window.location.reload();
+    }
+    // window.location.reload();
   };
 
   useEffect(() => {
     setThreadHeads();
   }, []);
 
+  // Through the id make the heads clickable to go to the chat
   return (
     <div className="w-1/3 bg-black-200 p-4 h-screen overflow-y-auto">
       {/* New Chat Button */}
       <div className="pb-4 border-b border-gray-300">
-        <button
-          onClick={handleNewChatClick}
-          className="w-full bg-gray-500 text-white px-4 py-2 rounded-md"
-        >
-          New Chat
-        </button>
+        <Link href="/">
+          <button
+            onClick={handleNewChatClick}
+            className="w-full bg-gray-500 text-white px-4 py-2 rounded-md"
+          >
+            New Chat
+          </button>
+        </Link>
       </div>
 
       <h2 className="text-l font-serif mt-3 mb-4">Chat History</h2>
       {
         <div>
           {history.map((history, index) => (
-            <div key={index} className="mb-2">
-              {history}
-            </div>
+            <Link key={index} href={`/chat/${history.id}`}>
+              <div key={index} className="mb-2">
+                {history.head}
+              </div>
+            </Link>
           ))}
         </div>
       }

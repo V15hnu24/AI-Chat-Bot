@@ -7,11 +7,10 @@ const ChatBot = ({ keyProp }) => {
   const [loading, setLoading] = useState(false);
   const [threadid, setThreadid] = useState(null); // [TODO] - implement threadid
   const textareaRef = useRef(null);
-
   const [initialized, setInitialized] = useState(false);
 
   useEffect(() => {
-    if (!initialized) {   
+    if (!initialized) {
       setInitialized(true);
       console.log("Initializing ChatBot");
       // Function to be called when the page loads for the first time
@@ -40,85 +39,6 @@ const ChatBot = ({ keyProp }) => {
     } catch (error) {
       window.alert("Error: " + error);
       console.log(error);
-    }
-  };
-
-  // useEffect(() => {
-  //   console.log("useEffect");
-  //   const setThreadId = async () => {
-  //     if (!threadid) {
-  //       await setNewThreadId();
-  //     }
-  //   };
-
-  //   // Run setThreadId only once when the component mounts
-  //   setThreadId();
-
-  //   return () => {
-  //     // Set the component as unmounted when it is about to be unmounted
-  //     isMounted.current = false;
-  //   };
-  // }, []);
-
-  const getTurn = async (turnId) => {
-    try {
-      let id = turnId;
-      console.log("Turn ID: " + id);
-      const result = await fetch(`${server}/api/turn/${id}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      const data = await result.json();
-      const prompt = data["data"].prompt;
-      const response = data["data"].response;
-      return { prompt, response };
-    } catch (error) {
-      window.alert("Error: " + error);
-      console.log(error);
-    }
-  };
-
-  const updateConversation = async (threadId) => {
-    // GET from thread api
-    try {
-      let id = threadId;
-      console.log("Thread ID: " + id);
-      const result = await fetch(`${server}/api/thread/${id}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      const data = await result.json();
-      console.log("data from chatBot: " + data);
-      const numOfTurns = data["data"].numberOfTurns;
-
-      if (numOfTurns > 0) {
-        const turns = data["data"];
-
-        //Get the prompt and the response from each turn
-        for (let i = 0; i < numOfTurns; i++) {
-          const turnId = turns[i];
-          const { prompt, response } = await getTurn(turnId);
-          setConversation([
-            ...conversation,
-            { role: "user", content: prompt },
-            { role: "bot", content: response },
-          ]);
-        }
-      } else {
-        setConversation([]);
-      }
-    } catch (error) {
-      window.alert("Error: " + error);
-      console.log(error);
-    } finally {
-      setInputMessage("");
-      setLoading(false);
     }
   };
 

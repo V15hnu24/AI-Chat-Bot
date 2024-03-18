@@ -6,10 +6,7 @@ function MainHome() {
   return (
     <>
       <Header />
-      {/* <Body /> */}
       <div className="flex">
-        {/* <ChatHistory onStartNewChat={handleStartNewChat} /> */}
-        {/* <ChatBot keyProp={key}/> */}
         <ChatHistory />
         <ChatBot />
       </div>

@@ -10,9 +10,9 @@ const updateThread = async (threadId, turn) => {
     const thread = await Thread.findById(threadId);
     if (thread.numberOfTurns === 0) {
       thread.head = turn.prompt;
-      thread.turns = [turn._id];
+      thread.turnIds = [turn._id];
     } else {
-      thread.turns.push(turn._id);
+      thread.turnIds.push(turn._id);
     }
     thread.numberOfTurns += 1;
     await thread.save();
