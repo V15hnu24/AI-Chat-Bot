@@ -70,7 +70,9 @@ const ChatHistory = () => {
           {history.map((history, index) => (
             <Link key={index} href={`/chat/${history.id}`}>
               <div key={index} className="mb-2">
-                {history.head}
+                <div className="hover:text-gray-400">
+                  {history.head}
+                </div>
               </div>
             </Link>
           ))}

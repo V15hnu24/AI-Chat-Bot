@@ -51,7 +51,7 @@ const Chat = (packet) => {
 
   // Iterate through the turnIds and get the prompt and response for each turn
   const updateConversation = async (turnIds) => {
-    const prevConvo = [...conversation];
+    const prevConvo = [];
     for (let i = 0; i < turnIds.length; i++) {
       const turnId = turnIds[i];
       const { prompt, response } = await getTurn(turnId);
