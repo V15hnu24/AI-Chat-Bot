@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import dbConnect from "../../utils/dbConnect";
 import Turn from "../../models/turn";
 import Thread from "@/models/thread";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 dbConnect();
 
@@ -50,9 +51,18 @@ const handler = async (req, res) => {
     case "POST":
       try {
         const prompt = req.body.prompt;
-        const response = `Bot: Thanks for your message - ${prompt}`;
+        // const response = `Bot: Thanks for your message - ${prompt}`;
+        const genAI = new GoogleGenerativeAI(process.env.GOOGLE_GENERATIVE_AI_API_KEY);
+
+        const model = genAI.getGenerativeModel({ model: "gemini-pro"});
+
+        const result = await model.generateContent(prompt);
+        const response = await result.response;
+        const response_text = response.text();
+
+
         const turn = await Turn({
-          response: response,
+          response: response_text,
           prompt: prompt,
         });
         await turn.save();
