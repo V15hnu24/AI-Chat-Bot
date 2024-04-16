@@ -13,6 +13,10 @@ const threadSchema = new mongoose.Schema({
         type: String,
         default: '',
     },
+    selectedSubject: {
+        type: String,
+        default: '',
+    },
 });
 
 export default mongoose.models.Thread || mongoose.model('Thread', threadSchema);

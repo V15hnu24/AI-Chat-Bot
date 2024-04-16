@@ -1,7 +1,9 @@
 import React, { useRef, useState, useEffect } from "react";
 import { server } from "../config";
+import { useSubject } from "./SubjectContext";
 
 const ChatBot = ({ keyProp }) => {
+  const {selectedSubject} = useSubject();
   const [inputMessage, setInputMessage] = useState("");
   const [conversation, setConversation] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -19,10 +21,10 @@ const ChatBot = ({ keyProp }) => {
     }
   }, [initialized]);
 
+
+  //Is selectedsubject changes then create new thread with the selected subject
   const setNewThreadId = async () => {
-    if (threadid) {
-      return;
-    }
+
     try {
       console.log("Creating new thread");
       const result = await fetch(`${server}/api/thread`, {
@@ -30,17 +32,25 @@ const ChatBot = ({ keyProp }) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({}),
+        body: JSON.stringify({selectedSubject: selectedSubject}),
       });
 
       const data = await result.json();
       const threadId = data["data"]._id;
+      console.log("New thread created with id: " + threadId);
       setThreadid(threadId);
     } catch (error) {
       window.alert("Error: " + error);
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    if (selectedSubject) {
+      console.log("Selected subject changed: " + selectedSubject);
+      setNewThreadId();
+    }
+  }, [selectedSubject]);
 
   const sendMessage = async () => {
     const simulateAPICall = async (userMessage) => {

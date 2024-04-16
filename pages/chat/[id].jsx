@@ -6,6 +6,11 @@ import ChatHistory from "../../components/ChatHistory";
 import Header from "../../components/Header";
 
 const Chat = (packet) => {
+
+  if (!packet) {
+    return <div>Loading...</div>;
+  }
+  
   const tid = packet.packet.thread_id;
   const turnIds = packet.packet.turnIds;
   const [inputMessage, setInputMessage] = useState("");

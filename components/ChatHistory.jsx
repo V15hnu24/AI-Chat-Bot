@@ -10,6 +10,9 @@ const ChatHistory = () => {
     for (let i = 0; i < threads.length; i++) {
       const head = threads[i].head;
       const id = threads[i]._id;
+      if (!head) {
+        continue;
+      }
       history.push({ head: head, id: id });
     }
     setHistory(history);
@@ -45,6 +48,24 @@ const ChatHistory = () => {
     // window.location.reload();
   };
 
+  const deleteThread = async (id) => {
+    try {
+      const result = await fetch(`${server}/api/thread/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = await result.json();
+      console.log(data);
+      setThreadHeads();
+    } catch (error) {
+      window.alert("Error: " + error);
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     setThreadHeads();
   }, []);
@@ -68,13 +89,26 @@ const ChatHistory = () => {
       {
         <div>
           {history.map((history, index) => (
-            <Link key={index} href={`/chat/${history.id}`}>
-              <div key={index} className="mb-2">
-                <div className="hover:text-gray-400">
-                  {history.head}
-                </div>
+            <div className="flex items-center justify-between">
+              {" "}
+              {/* Container for flex layout */}
+              <div>
+                <Link key={index} href={`/chat/${history.id}`}>
+                  <div key={index} className="mb-2">
+                    <div className="hover:text-gray-400">{history.head}</div>
+                  </div>
+                </Link>
               </div>
-            </Link>
+              <div>
+                <button
+                  href="/"
+                  onClick={async () => deleteThread(history.id)}
+                  className="text-red-500"
+                >
+                  <img src="/delete.png" alt="delete" className="w-4 h-4"></img>
+                </button>
+              </div>
+            </div>
           ))}
         </div>
       }
