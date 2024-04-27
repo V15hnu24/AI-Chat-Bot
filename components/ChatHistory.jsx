@@ -10,10 +10,11 @@ const ChatHistory = () => {
     for (let i = 0; i < threads.length; i++) {
       const head = threads[i].head;
       const id = threads[i]._id;
+      const selectedSubject = threads[i].selectedSubject;
       if (!head) {
         continue;
       }
-      history.push({ head: head, id: id });
+      history.push({ head: head, id: id, selectedSubject: selectedSubject});
     }
     setHistory(history);
   };
@@ -95,7 +96,7 @@ const ChatHistory = () => {
               <div>
                 <Link key={index} href={`/chat/${history.id}`}>
                   <div key={index} className="mb-2">
-                    <div className="hover:text-gray-400">{history.head}</div>
+                    <div className="hover:text-gray-400">{history.selectedSubject + " - " + history.head}</div>
                   </div>
                 </Link>
               </div>
