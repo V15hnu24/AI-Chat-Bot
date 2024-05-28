@@ -1,4 +1,4 @@
-<img width="1470" alt="Screenshot 2024-05-28 at 7 35 17 PM" src="https://github.com/V15hnu24/AI-Chat-Bot/assets/75430163/32a93fb0-5298-4cb9-bb1a-acbfa072cdf4">
+<img width="1470" alt="Screenshot 2024-05-28 at 7 36 17 PM" src="https://github.com/V15hnu24/AI-Chat-Bot/assets/75430163/52f3807e-a8c5-4785-8771-1b5aa75acb90">
 
 # AI-Chat-Bot Application
 
