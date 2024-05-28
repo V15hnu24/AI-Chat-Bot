@@ -1,4 +1,5 @@
 # AI-Chat-Bot Application
+<img width="1470" alt="Screenshot 2024-05-28 at 7 34 36 PM" src="https://github.com/V15hnu24/AI-Chat-Bot/assets/75430163/5340f34d-cd73-4e21-8d47-653c50b92434">
 
 ## Description
 This project is a chat application built with Next.js and Tailwind CSS. It allows users to engage in conversations with a chatbot, fetching prompts and responses from Google's Gemini API.
